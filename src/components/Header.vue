@@ -1,8 +1,7 @@
-<script lang="ts">
+<script setup lang="ts">
 import { RouterLink } from 'vue-router';
-
-export default {}
 </script>
+
 <template>
   <nav class="space-x-4">
     <RouterLink to="/">Home</RouterLink>

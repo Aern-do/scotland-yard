@@ -1,6 +1,9 @@
-<script lang="ts">
-export default {};
+<script setup lang="ts">
+import Board from '../components/Board.vue';
 </script>
+
 <template>
-  <h1 class="text-teal-400">HOME PAGE</h1>
+  <div class="flex h-screen w-screen items-center justify-center">
+    <Board />
+  </div>
 </template>
