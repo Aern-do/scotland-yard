@@ -19,8 +19,12 @@ const handleLogin = async () => {
 
   setTimeout(() => {
     loading.value = false
-    if (username.value === 'admin' && password.value === '1234') {
-      router.push('/test-1')
+    const storedUsers = JSON.parse(localStorage.getItem('users') || '[]')
+    const user = storedUsers.find((u: any) => u.username === username.value && u.password === password.value)
+
+    if (user) {
+      localStorage.setItem('currentUser', JSON.stringify(user))
+      router.push('/')
     } else {
       error.value = 'Invalid username or password'
     }

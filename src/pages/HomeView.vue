@@ -6,9 +6,15 @@ import { Label } from '@/components/ui/label'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { useRouter } from 'vue-router'
 
-
 const router = useRouter()
-const goToTest = () => navigateTo('/test-1')
+
+const logout = () => {
+  localStorage.removeItem('currentUser')
+  router.push('/login')
+}
+
+
+const goToLobby = () => navigateTo('/lobby')
 
 const navigateTo = (route) => {
   router.push(route);
@@ -36,11 +42,14 @@ const username = ref('')
         </div>
 
         <div class="flex flex-col gap-3">
-          <Button @click="goToTest" class="w-full" variant="default">
+          <Button @click="goToLobby" class="w-full" variant="default">
             Create Lobby
           </Button>
-          <Button class="w-full" variant="secondary">
+          <Button @click="goToLobby" class="w-full" variant="secondary">
             Join Lobby
+          </Button>
+          <Button @click="logout" variant="destructive">
+            logout
           </Button>
         </div>
       </CardContent>

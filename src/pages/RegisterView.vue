@@ -4,148 +4,115 @@ import { useRouter } from 'vue-router'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card'
+
+const router = useRouter()
 
 const username = ref('')
 const password = ref('')
 const confirmPassword = ref('')
-const loading = ref(false)
 const error = ref('')
-const success = ref(false)
+const success = ref('')
+const loading = ref(false)
 
-const router = useRouter()
-
-async function register() {
+const handleRegister = () => {
   error.value = ''
-  success.value = false
-
-  // Validation
-  if (!username.value || !password.value || !confirmPassword.value) {
-    error.value = 'All fields are required.'
-    return
-  }
-
-  if (username.value.length < 3) {
-    error.value = 'Username must be at least 3 characters.'
-    return
-  }
-
-  if (password.value.length < 6) {
-    error.value = 'Password must be at least 6 characters.'
-    return
-  }
-
-  if (password.value !== confirmPassword.value) {
-    error.value = 'Passwords do not match.'
-    return
-  }
-
+  success.value = ''
   loading.value = true
 
-  try {
-    const res = await fetch('http://localhost:3000/api/register', {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: username.value.trim(),
-        password: password.value,
-      }),
-    })
+  setTimeout(() => {
+    loading.value = false
 
-    const data = await res.json()
-
-    if (!res.ok) {
-      throw new Error(data.error || 'Registration failed')
+    if (!username.value || !password.value) {
+      error.value = 'Please fill in all fields'
+      return
     }
 
-    success.value = true
-    
-    // Store user data
-    localStorage.setItem('user', JSON.stringify(data.user))
-    localStorage.setItem('token', data.user.token)
+    if (password.value !== confirmPassword.value) {
+      error.value = 'Passwords do not match'
+      return
+    }
 
-    console.log('✅ Registration successful:', data.user.username)
-    
-    setTimeout(() => router.push('/lobby'), 1200)
-  } catch (err) {
-    // @ts-ignore
-    error.value = err.message || 'Something went wrong. Please try again.'
-    console.error('❌ Registration error:', err)
-  } finally {
-    loading.value = false
-  }
+    const existingUsers = JSON.parse(localStorage.getItem('users') || '[]')
+    const userExists = existingUsers.some((u: any) => u.username === username.value)
+
+    if (userExists) {
+      error.value = 'Username already exists'
+      return
+    }
+
+    existingUsers.push({
+      username: username.value,
+      password: password.value
+    })
+    localStorage.setItem('users', JSON.stringify(existingUsers))
+
+    success.value = 'Account created successfully!'
+    setTimeout(() => router.push('/login'), 1500)
+  }, 1000)
 }
 </script>
 
 <template>
-  <div class="flex h-screen w-screen items-center justify-center bg-[#0b1120] text-white">
-    <div
-      class="w-[380px] rounded-2xl bg-[#111a2b]/90 border border-[#1e2a44] p-8 shadow-2xl backdrop-blur-md"
-    >
-      <h1 class="text-center text-3xl font-extrabold text-blue-400 mb-8">Register</h1>
+  <div class="flex h-screen w-screen items-center justify-center bg-muted">
+    <Card class="w-[360px] shadow-lg">
+      <CardHeader>
+        <CardTitle class="text-center text-2xl font-bold">
+          Register Account
+        </CardTitle>
+      </CardHeader>
 
-      <div class="space-y-5">
-        <div>
-          <Label for="username" class="text-slate-300 mb-1 block text-sm font-medium">Username</Label>
+      <CardContent class="space-y-4">
+        <div class="space-y-2">
+          <Label for="username">Username</Label>
           <Input
             id="username"
             v-model="username"
-            placeholder="your_username"
-            class="w-full bg-[#1a2336] border border-slate-700 text-white placeholder-slate-500 rounded-lg px-4 py-2 focus:border-blue-400 focus:ring-blue-400"
+            placeholder="Enter a username"
+            autocomplete="username"
           />
         </div>
 
-        <div>
-          <Label for="password" class="text-slate-300 mb-1 block text-sm font-medium">Password</Label>
+        <div class="space-y-2">
+          <Label for="password">Password</Label>
           <Input
             id="password"
-            type="password"
             v-model="password"
-            placeholder="••••••••"
-            class="w-full bg-[#1a2336] border border-slate-700 text-white placeholder-slate-500 rounded-lg px-4 py-2 focus:border-blue-400 focus:ring-blue-400"
+            type="password"
+            placeholder="Enter a password"
+            autocomplete="new-password"
           />
         </div>
 
-        <div>
-          <Label for="confirmPassword" class="text-slate-300 mb-1 block text-sm font-medium">Confirm Password</Label>
+        <div class="space-y-2">
+          <Label for="confirmPassword">Confirm Password</Label>
           <Input
             id="confirmPassword"
-            type="password"
             v-model="confirmPassword"
-            placeholder="••••••••"
-            class="w-full bg-[#1a2336] border border-slate-700 text-white placeholder-slate-500 rounded-lg px-4 py-2 focus:border-blue-400 focus:ring-blue-400"
+            type="password"
+            placeholder="Confirm your password"
+            autocomplete="new-password"
           />
         </div>
 
-        <Button
-          class="w-full bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-semibold py-2.5 rounded-lg transition-all mt-4 shadow-lg"
-          :disabled="loading"
-          @click="register"
-        >
-          <span v-if="!loading">Sign Up</span>
-          <span v-else>Registering...</span>
-        </Button>
-
-        <div v-if="error" class="text-red-400 text-sm text-center mt-3">
+        <div v-if="error" class="text-red-500 text-sm text-center">
           {{ error }}
         </div>
-        <div v-if="success" class="text-green-400 text-sm text-center mt-3">
-          Registration successful! Redirecting...
+        <div v-if="success" class="text-green-500 text-sm text-center">
+          {{ success }}
         </div>
+      </CardContent>
 
-        <p class="text-center text-sm text-slate-400 mt-6">
-          Already have an account?
-          <RouterLink to="/login" class="text-blue-400 hover:underline">Log in</RouterLink>
-        </p>
-      </div>
-    </div>
+      <CardFooter class="flex flex-col gap-3">
+        <Button @click="handleRegister" :disabled="loading" class="w-full" variant="default">
+          <span v-if="!loading">Register</span>
+          <span v-else>Loading...</span>
+        </Button>
+
+        <Button @click="router.push('/login')" class="w-full" variant="secondary">
+          Back to Login
+        </Button>
+      </CardFooter>
+    </Card>
   </div>
 </template>
-
-<style scoped>
-body {
-  background-color: #0b1120;
-  font-family: 'Inter', sans-serif;
-}
-</style>
