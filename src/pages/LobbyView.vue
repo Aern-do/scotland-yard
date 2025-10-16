@@ -1,14 +1,25 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 
+const router = useRouter()
+const playerCount = ref<number | null>(null)
 
+const startGame = () => {
+  if (!playerCount.value || playerCount.value < 2) {
+    alert('Please enter a valid number of players (2 or more)')
+    return
+  }
+  router.push(`/board/${playerCount.value}`)
+}
 </script>
 
 <template>
-    <div class="flex h-screen w-screen items-center justify-center bg-muted">
+  <div class="flex h-screen w-screen items-center justify-center bg-muted">
     <Card class="w-[350px] shadow-lg">
       <CardHeader>
         <CardTitle class="text-center text-2xl font-bold">
@@ -17,12 +28,18 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
       </CardHeader>
       <CardContent class="space-y-4">
         <div class="space-y-2">
-          <Label for="username">Player count</Label>
+          <Label for="playerCount">Player count</Label>
           <Input
-            id="Player count"
+            id="playerCount"
+            type="number"
+            v-model.number="playerCount"
             placeholder="Enter player count"
+            min="2"
           />
         </div>
+        <Button class="w-full" @click="startGame">
+          Start Game
+        </Button>
       </CardContent>
     </Card>
   </div>
