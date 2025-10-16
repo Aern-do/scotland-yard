@@ -3,7 +3,6 @@ import HomeView from "./pages/HomeView.vue";
 import LobbyView from "./pages/LobbyView.vue";
 import RegisterView from "./pages/RegisterView.vue"
 import LoginView from "./pages/LoginView.vue";
-import BoardView from "./pages/BoardView.vue";
 
 const routes = [
   { path: "/home", component: HomeView },

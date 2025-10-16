@@ -8,6 +8,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 
 const router = useRouter()
 const playerCount = ref<number | null>(null)
+const picked = ref('Public')
 
 const startGame = () => {
   if (!playerCount.value || playerCount.value < 2) {
@@ -16,6 +17,8 @@ const startGame = () => {
   }
   router.push(`/board/${playerCount.value}`)
 }
+
+
 </script>
 
 <template>
@@ -35,7 +38,22 @@ const startGame = () => {
             v-model.number="playerCount"
             placeholder="Enter player count"
             min="2"
+            max="6"
           />
+        </div>
+        <Label for="playerCount">Game privacy</Label>
+
+        <div class="space-y-2 flex gap-4">
+          <div>
+            <input type="radio" id="public" value="Public" v-model="picked"/>
+            <label for="one">Public</label>            
+          </div>
+
+          <div>
+            <input type="radio" id="private" value="Private" v-model="picked"/>
+            <label for="two">Private</label>            
+          </div>
+
         </div>
         <Button class="w-full" @click="startGame">
           Start Game
