@@ -48,7 +48,7 @@ const handleRegister = () => {
     localStorage.setItem('users', JSON.stringify(existingUsers))
 
     success.value = 'Account created successfully!'
-    setTimeout(() => router.push('/login'), 1500)
+    setTimeout(() => router.push('/'), 1500)
   }, 1000)
 }
 </script>
@@ -109,7 +109,7 @@ const handleRegister = () => {
           <span v-else>Loading...</span>
         </Button>
 
-        <Button @click="router.push('/login')" class="w-full" variant="secondary">
+        <Button @click="router.push('/')" class="w-full" variant="secondary">
           Back to Login
         </Button>
       </CardFooter>

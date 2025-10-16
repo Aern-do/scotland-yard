@@ -24,7 +24,7 @@ const handleLogin = async () => {
 
     if (user) {
       localStorage.setItem('currentUser', JSON.stringify(user))
-      router.push('/')
+      router.push('/home')
     } else {
       error.value = 'Invalid username or password'
     }

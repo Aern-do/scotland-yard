@@ -10,7 +10,7 @@ const router = useRouter()
 
 const logout = () => {
   localStorage.removeItem('currentUser')
-  router.push('/login')
+  router.push('/')
 }
 
 

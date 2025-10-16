@@ -5,10 +5,10 @@ import RegisterView from "./pages/RegisterView.vue"
 import LoginView from "./pages/LoginView.vue";
 
 const routes = [
-  { path: "/", component: HomeView },
+  { path: "/home", component: HomeView },
   { path: "/register", component: RegisterView },
   { path: "/lobby", component: LobbyView },
-  { path: "/login", component: LoginView },
+  { path: "/", component: LoginView },
 ];
 
 export const router = createRouter({
