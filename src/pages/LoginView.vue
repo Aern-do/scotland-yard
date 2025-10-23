@@ -13,7 +13,7 @@ const password = ref('')
 const loading = ref(false)
 const error = ref('')
 
-const handleLogin = async () => {
+const handleLogin = () => {
   error.value = ''
   loading.value = true
 
