@@ -33,34 +33,23 @@ const handleLogin = async () => {
 </script>
 
 <template>
-  <div class="flex h-screen w-screen items-center justify-center bg-muted">
+  <div
+    class="flex flex-col h-screen w-screen items-center justify-center bg-[url('https://cdn-imgix.headout.com/media/images/f41bdd0b95a2fc1fa8aff71725ffe5e3-2963-london-evening-cruise-on-river-thames-04.JPG')] bg-cover bg-center bg-black/50 bg-blend-darken">
+    <div class="flex justify-center items-center">
+      <div class="bg-[url(./assets/image.webp)] bg-size-[360px] bg-no-repeat bg-center h-56 w-96">
+      </div>
+    </div>
     <Card class="w-[360px] shadow-lg">
-      <CardHeader>
-        <CardTitle class="text-center text-2xl font-bold">
-          Scotland Yard
-        </CardTitle>
-      </CardHeader>
-
       <CardContent class="space-y-4">
         <div class="space-y-2">
           <Label for="username">Username</Label>
-          <Input
-            id="username"
-            v-model="username"
-            placeholder="Enter your username"
-            autocomplete="username"
-          />
+          <Input id="username" v-model="username" placeholder="Enter your username" autocomplete="username" />
         </div>
 
         <div class="space-y-2">
           <Label for="password">Password</Label>
-          <Input
-            id="password"
-            v-model="password"
-            type="password"
-            placeholder="Enter your password"
-            autocomplete="current-password"
-          />
+          <Input id="password" v-model="password" type="password" placeholder="Enter your password"
+            autocomplete="current-password" />
         </div>
 
         <div v-if="error" class="text-red-500 text-sm text-center">
