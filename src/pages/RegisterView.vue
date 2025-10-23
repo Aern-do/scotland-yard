@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card'
+import { Card, CardContent, CardFooter } from '@/components/ui/card'
 
 const router = useRouter()
 
@@ -54,14 +54,13 @@ const handleRegister = () => {
 </script>
 
 <template>
-  <div class="flex h-screen w-screen items-center justify-center bg-muted">
+  <div
+    class="flex flex-col h-screen w-screen items-center justify-center bg-[url('https://cdn-imgix.headout.com/media/images/f41bdd0b95a2fc1fa8aff71725ffe5e3-2963-london-evening-cruise-on-river-thames-04.JPG')] bg-cover bg-center bg-black/50 bg-blend-darken">
+    <div class="flex justify-center items-center">
+      <div class="bg-[url(./assets/image.webp)] bg-size-[360px] bg-no-repeat bg-center h-56 w-96">
+      </div>
+    </div>
     <Card class="w-[360px] shadow-lg">
-      <CardHeader>
-        <CardTitle class="text-center text-2xl font-bold">
-          Register Account
-        </CardTitle>
-      </CardHeader>
-
       <CardContent class="space-y-4">
         <div class="space-y-2">
           <Label for="username">Username</Label>
