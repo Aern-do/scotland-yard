@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { cors } from 'hono/cors'
 import { User } from "./entities/User";
 import { authRouter } from "./routes/auth";
+import { gameRouter } from "./routes/game";
 
 export interface Variables {
   user: User;
@@ -15,5 +16,6 @@ const app = createHono();
 
 app.use("/*", cors());
 app.route("/", authRouter);
+app.route("/game", gameRouter);
 
 export default app;
