@@ -20,8 +20,8 @@ export const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  const loggedIn = !!localStorage.getItem("currentUser");
+router.beforeEach((to, _, next) => {
+  const loggedIn = !!localStorage.getItem("token");
   const authPages = ["/", "/register"];
 
   if (authPages.includes(to.path) && loggedIn) {

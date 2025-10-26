@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { RouterView } from "vue-router";
-import Header from "./components/Header.vue";
+import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
+
 </script>
 
 <template>
   <main>
     <RouterView />
+    <VueQueryDevtools />
+
   </main>
 </template>
