@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { cors } from 'hono/cors'
 import { User } from "./entities/User";
 import { authRouter } from "./routes/auth";
 
@@ -12,6 +13,7 @@ export function createHono(): Hono<{ Variables: Variables }> {
 
 const app = createHono();
 
+app.use("/*", cors());
 app.route("/", authRouter);
 
 export default app;
